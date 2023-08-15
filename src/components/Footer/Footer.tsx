@@ -5,7 +5,7 @@ const Footer = () => {
 
   return (
     <footer className={styles.footer}>
-      <a href="https://newline.co">Newline.co</a>
+      Powered by React, build by kelter
       <br />
       {currentYear}
     </footer>

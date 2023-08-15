@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-
 import { useInstrument } from "../../state/Instrument";
-import useSoundfont from "../../adapters";
+import SoundfontProvider from "../../adapters/SoundFont";
 import useAudioContext from "../../hooks/useAudioContext";
 import Keyboard from "./Keyboard";
 
@@ -9,17 +7,13 @@ const KeyboardWithInstrument = () => {
   const AudioContext = useAudioContext()!;
   const { instrument } = useInstrument();
 
-  const { loading, current, play, stop, load } = useSoundfont({
-    AudioContext,
-  });
-
-  useEffect(() => {
-    if (!loading && instrument !== current) {
-      load(instrument);
-    }
-  }, [load, loading, current, instrument]);
-
-  return <Keyboard loading={loading} play={play} stop={stop} />;
+  return (
+    <SoundfontProvider
+      AudioContext={AudioContext}
+      instrument={instrument}
+      render={(props) => <Keyboard {...props} />}
+    />
+  );
 };
 
 export default KeyboardWithInstrument;
